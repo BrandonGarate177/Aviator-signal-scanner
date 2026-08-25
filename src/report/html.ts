@@ -185,6 +185,16 @@ export function renderHtml(result: CensusResult): string {
   .reasons li { display: flex; justify-content: space-between; gap: 12px;
                 border-bottom: 1px dotted var(--line); padding: 3px 0; }
   .count { color: var(--faint); font-weight: 400; margin-left: 6px; }
+  .thesis { margin: 40px 0 8px; }
+  .thesis .th { margin: 0 0 16px; }
+  .thesis .grid { display: grid; gap: 12px;
+                  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); }
+  .thesis .card { background: var(--panel); border: 1px solid var(--line);
+                  border-radius: 6px; padding: 16px 18px; position: relative; }
+  .thesis .k { font-family: var(--mono); font-size: 11px; color: var(--faint); margin-bottom: 6px; }
+  .thesis h3 { margin: 0 0 8px; font-size: 14.5px; letter-spacing: -0.01em; }
+  .thesis p { margin: 0; font-size: 13.5px; color: var(--dim); line-height: 1.6; }
+  .thesis .close { margin: 14px 2px 0; font-size: 13.5px; color: var(--dim); }
   .entity { margin-top: 7px; font-size: 11.5px; font-weight: 600; }
   .entity.buyer { color: #3fb950; }
   .entity.indirect { color: var(--warm); }
@@ -224,6 +234,50 @@ export function renderHtml(result: CensusResult): string {
     <div class="stat"><div class="n">${num(bySegment("native"))}</div><div class="l">native</div></div>
     <div class="stat"><div class="n">${num(customers.length)}</div><div class="l">excluded as customers</div></div>
   </div>
+
+  <section class="thesis">
+    <h2 class="th">Why merge-queue adoption is the signal</h2>
+
+    <div class="grid">
+      <div class="card">
+        <div class="k">1</div>
+        <h3>Adoption is the diagnosis</h3>
+        <p>A merge queue is not a default. Nobody arrives at one by accident — a team hits broken
+        <span class="mono">main</span>, or races between PRs that each pass alone and fail together, and then
+        goes and configures something. Every organization below has already reached that conclusion on its own.
+        There is no problem left to explain to them.</p>
+      </div>
+
+      <div class="card">
+        <div class="k">2</div>
+        <h3>It's behavior, not firmographics</h3>
+        <p>Headcount, funding stage and tech-stack tags are proxies for the pain. This is the act itself,
+        written into a config file and confirmed by queue runs. It is also why the list can't be bought:
+        producing it requires reading repository configuration, not filtering a company database.</p>
+      </div>
+
+      <div class="card">
+        <div class="k">3</div>
+        <h3>The free queue is the top of the funnel</h3>
+        <p>GitHub's native merge queue is free on public repositories, so adopting it costs nothing and proves
+        only that the team wanted one. What teams reach for after that — parallel queues, affected-target
+        batching, monorepo scale, self-hosting — is exactly what Aviator's own DoorDash case study is built on.
+        <strong>Running the free queue at volume is the moment before that decision.</strong></p>
+      </div>
+
+      <div class="card">
+        <div class="k">4</div>
+        <h3>A competitor install proves budget</h3>
+        <p>An organization paying Mergify today has already decided a merge queue is worth money and has the
+        line item to prove it. That is a shorter conversation than a greenfield pitch: the category is sold,
+        only the vendor is open.</p>
+      </div>
+    </div>
+
+    <p class="close">Volume answers the remaining question — <em>why now</em>. A queue running a handful of
+    batches is a team that adopted the idea. A queue running thousands is a team currently paying for it in
+    wait time, and the ranking is ordered accordingly.</p>
+  </section>
 
   <div class="funnel">
     <span><strong>${num(coverage.reposDiscovered)}</strong> repos discovered</span>
