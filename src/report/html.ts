@@ -86,15 +86,15 @@ function orgRow(org: CensusOrg, i: number): string {
     : `<div class="entity unknown">unclassified</div>`;
 
   return `<tr class="row${cls && cls.buyerClass === "non_buyer" ? " dimmed" : ""}">
-    <td class="rank mono">${i + 1}</td>
+    <td class="rank mono" data-label="Rank">${i + 1}</td>
     <td>
       <div class="org"><a href="${esc(org.url)}">${esc(org.qualification.name ?? org.login)}</a></div>
       <div class="sub mono">${esc(org.login)}${domain ? ` · <a href="https://${esc(domain)}">${esc(domain)}</a>` : ""}</div>
     </td>
-    <td><span class="pill ${meta.tone}">${meta.label}</span>${entity}</td>
-    <td class="vol mono">${num(org.observedVolume)}<span class="unit">${volumeLabel(org)}</span></td>
-    <td class="mono dim">${esc(vendors)}<span class="unit">${org.maxContributors >= 100 ? "100+" : num(org.maxContributors)} contributors</span></td>
-    <td><ul class="repos">${repos}</ul></td>
+    <td data-label="Segment"><span class="pill ${meta.tone}">${meta.label}</span>${entity}</td>
+    <td class="vol mono" data-label="Volume">${num(org.observedVolume)}<span class="unit">${volumeLabel(org)}</span></td>
+    <td class="mono dim" data-label="Running">${esc(vendors)}<span class="unit">${org.maxContributors >= 100 ? "100+" : num(org.maxContributors)} contributors</span></td>
+    <td data-label="Evidence"><ul class="repos">${repos}</ul></td>
   </tr>`;
 }
 
@@ -116,7 +116,12 @@ export function renderHtml(result: CensusResult): string {
 
   const generated = new Date(result.generatedAt).toISOString().replace("T", " ").slice(0, 16);
 
-  return `<title>Merge Queue Census</title>
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merge Queue Census</title>
 <style>
   :root {
     --bg: #0d1117; --panel: #151b23; --line: #262d38;
@@ -164,7 +169,8 @@ export function renderHtml(result: CensusResult): string {
   .vol { font-size: 17px; white-space: nowrap; }
   .unit { display: block; font-size: 11px; color: var(--faint); font-weight: 400; }
   .repos { list-style: none; margin: 0; padding: 0; font-family: var(--mono); font-size: 12px; }
-  .repos li { display: grid; grid-template-columns: 1fr auto; gap: 2px 14px; padding: 3px 0; }
+  .repos li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 14px; padding: 3px 0; }
+  .repos a { overflow-wrap: anywhere; }
   .repos .detail { grid-column: 1 / -1; color: var(--faint); font-size: 11px; }
 
   .pill { display: inline-block; font-size: 11.5px; padding: 3px 9px; border-radius: 999px;
@@ -208,9 +214,39 @@ export function renderHtml(result: CensusResult): string {
             font-family: var(--mono); font-size: 12.5px; color: var(--dim); }
   .funnel .arrow { color: var(--faint); }
   .funnel .final { color: var(--fg); }
+  @media (max-width: 760px) {
+    body { padding: 28px 16px 64px; font-size: 14.5px; }
+    h1 { font-size: 21px; }
+    h2 { margin: 34px 0 12px; }
+    .claim, .note, .thesis .card { padding: 14px 16px; }
+    .stat { min-width: 0; flex-basis: calc(50% - 6px); }
+
+    /* The ranked table stops being a table and becomes one card per row —
+       a 940px-wide grid is unreadable on a phone even with a scroll bar. */
+    .scroll { border: none; overflow-x: visible; }
+    table { min-width: 0; display: block; }
+    thead { display: none; }
+    tbody, tr { display: block; }
+    tr { border: 1px solid var(--line); border-radius: 6px;
+         margin-bottom: 10px; padding: 4px 2px; background: var(--panel); }
+    td { display: grid; grid-template-columns: 84px 1fr; gap: 10px;
+         align-items: baseline; border-bottom: none; padding: 7px 12px; }
+    td::before { content: attr(data-label); font-size: 10.5px;
+                 text-transform: uppercase; letter-spacing: 0.06em;
+                 color: var(--faint); }
+    /* .rank carries a fixed desktop width that fights the stacked grid. */
+    td.rank { width: auto; padding-bottom: 0; }
+    .vol { font-size: 15px; }
+    .unit { display: inline; margin-left: 6px; }
+    .why { max-width: none; }
+    .repos li { grid-template-columns: minmax(0, 1fr) auto; }
+    .org, .sub { overflow-wrap: anywhere; }
+  }
+
   footer { margin-top: 56px; color: var(--faint); font-size: 12.5px; font-family: var(--mono); }
 </style>
-
+</head>
+<body>
 <div class="wrap">
   <h1>Merge Queue Census</h1>
   <div class="meta">generated ${esc(generated)} UTC · merge-queue-census v${esc(result.toolVersion)} · every number links to its source</div>
@@ -391,5 +427,7 @@ export function renderHtml(result: CensusResult): string {
   </div>
 
   <footer>merge-queue-census · behavioral qualification, not firmographics · github.com/BrandonGarate177</footer>
-</div>`;
+</div>
+</body>
+</html>`;
 }
