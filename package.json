@@ -1,0 +1,20 @@
+{
+  "name": "merge-queue-census",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A behavioral census of organizations running merge queues in public on GitHub.",
+  "scripts": {
+    "census": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "openai": "^7.5.0",
+    "zod": "^4.4.3"
+  }
+}

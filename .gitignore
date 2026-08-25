@@ -1,0 +1,7 @@
+node_modules/
+.cache/
+.env
+out/*.json
+out/*.html
+!out/census.example.html
+.DS_Store
