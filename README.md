@@ -4,8 +4,6 @@ Finds organizations that are **demonstrably running a merge queue in public on
 GitHub**, ranks them by observed queue volume, and segments them by which vendor
 they run — GitHub's free native queue, or a competitor they already pay.
 
-Built for [Aviator](https://www.aviator.co)'s GTM Engineering Intern role.
-
 ```bash
 npm install
 cp .env.example .env      # add GITHUB_TOKEN and (optionally) OPENAI_API_KEY
