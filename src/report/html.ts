@@ -144,17 +144,15 @@ export function renderHtml(result: CensusResult): string {
   a:hover { text-decoration: underline; }
   .meta { color: var(--faint); font-family: var(--mono); font-size: 12.5px; margin-bottom: 28px; }
 
-  .claim { background: var(--panel); border: 1px solid var(--line);
-           border-left: 3px solid var(--cool); border-radius: 6px;
-           padding: 18px 22px; margin-bottom: 32px; }
-  .claim p { margin: 0 0 10px; }
-  .claim p:last-child { margin-bottom: 0; color: var(--dim); font-size: 14px; }
+  .lead { margin: 0 0 14px; max-width: 82ch; color: var(--dim); font-size: 15px; }
+  .lead strong { color: var(--fg); }
 
-  .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
-  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
-          padding: 12px 18px; min-width: 150px; flex: 1; }
-  .stat .n { font-family: var(--mono); font-size: 24px; }
-  .stat .l { color: var(--dim); font-size: 12.5px; margin-top: 2px; }
+  .summary { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-bottom: 8px;
+             padding: 11px 16px; background: var(--panel); border: 1px solid var(--line);
+             border-radius: 6px; font-size: 13px; color: var(--dim); }
+  .summary span { white-space: nowrap; }
+  .summary b { font-family: var(--mono); font-size: 15px; color: var(--fg);
+               font-weight: 500; margin-right: 6px; }
 
   .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; }
   table { width: 100%; border-collapse: collapse; min-width: 940px; }
@@ -218,8 +216,9 @@ export function renderHtml(result: CensusResult): string {
     body { padding: 28px 16px 64px; font-size: 14.5px; }
     h1 { font-size: 21px; }
     h2 { margin: 34px 0 12px; }
-    .claim, .note, .thesis .card { padding: 14px 16px; }
-    .stat { min-width: 0; flex-basis: calc(50% - 6px); }
+    .note, .thesis .card { padding: 14px 16px; }
+    .lead { font-size: 14.5px; }
+    .summary { gap: 5px 16px; padding: 10px 13px; }
 
     /* The ranked table stops being a table and becomes one card per row —
        a 940px-wide grid is unreadable on a phone even with a scroll bar. */
@@ -251,24 +250,21 @@ export function renderHtml(result: CensusResult): string {
   <h1>Merge Queue Census</h1>
   <div class="meta">generated ${esc(generated)} UTC · merge-queue-census v${esc(result.toolVersion)} · every number links to its source</div>
 
-  <div class="claim">
-    <p><strong>${num(outbound.length)} organizations running a merge queue in public today</strong>, ranked by
-    observed queue volume and segmented by which vendor they run.</p>
-    <p>This is a partial view. Private repositories are invisible to this method, so the large
-    private-monorepo buyers do not appear here. Every organization that does appear is qualified by
-    behavior — it runs a merge queue, in public, and the evidence link proves it.</p>
-  </div>
+  <p class="lead"><strong>${num(outbound.length)} organizations running a merge queue in public today</strong>,
+  ranked by observed queue volume and segmented by which vendor they run. Private repositories are invisible
+  to this method, so the largest buyers do not appear here — but every organization that does is qualified by
+  behavior, with an evidence link that proves it.</p>
 
-  <div class="stats">
+  <div class="summary">
     ${
       coverage.classification?.ran
-        ? `<div class="stat"><div class="n">${num(outbound.filter((o) => o.classification?.buyerClass === "buyer").length)}</div><div class="l">classified as companies</div></div>`
+        ? `<span><b>${num(outbound.filter((o) => o.classification?.buyerClass === "buyer").length)}</b>companies</span>`
         : ""
     }
-    <div class="stat"><div class="n">${num(bySegment("displacement"))}</div><div class="l">on a competitor</div></div>
-    <div class="stat"><div class="n">${num(bySegment("native_at_scale"))}</div><div class="l">native at scale</div></div>
-    <div class="stat"><div class="n">${num(bySegment("native"))}</div><div class="l">native</div></div>
-    <div class="stat"><div class="n">${num(customers.length)}</div><div class="l">excluded as customers</div></div>
+    <span><b>${num(bySegment("displacement"))}</b>on a competitor</span>
+    <span><b>${num(bySegment("native_at_scale"))}</b>native at scale</span>
+    <span><b>${num(bySegment("native"))}</b>native</span>
+    <span><b>${num(customers.length)}</b>excluded as customers</span>
   </div>
 
   <section class="thesis">

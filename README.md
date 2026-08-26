@@ -22,7 +22,7 @@ accounts itself by reading repository configuration.
 
 ## What it claims — and what it doesn't
 
-> 162 organizations running a merge queue in public today, ranked by actual
+> 163 organizations running a merge queue in public today, ranked by actual
 > queue volume, segmented by which vendor they're on, and classified by whether
 > they are an entity that buys engineering tooling at all.
 
@@ -35,7 +35,7 @@ Apollo, because it requires reading repo configs rather than firmographics.
 The report states its own coverage gaps on the page, including how many
 candidates were rejected and why. From the last full run: 3,063 repositories and
 2,274 owners discovered, 572 rejected at qualification, 87 configured but idle,
-215 repos and 73 orgs excluded for having no team behind the queue — 162 left.
+215 repos and 73 orgs excluded for having no team behind the queue — 163 left.
 Roughly **1 in 14** raw discoveries survives.
 
 A rendered example is committed at

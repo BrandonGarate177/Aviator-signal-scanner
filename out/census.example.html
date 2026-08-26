@@ -26,17 +26,15 @@
   a:hover { text-decoration: underline; }
   .meta { color: var(--faint); font-family: var(--mono); font-size: 12.5px; margin-bottom: 28px; }
 
-  .claim { background: var(--panel); border: 1px solid var(--line);
-           border-left: 3px solid var(--cool); border-radius: 6px;
-           padding: 18px 22px; margin-bottom: 32px; }
-  .claim p { margin: 0 0 10px; }
-  .claim p:last-child { margin-bottom: 0; color: var(--dim); font-size: 14px; }
+  .lead { margin: 0 0 14px; max-width: 82ch; color: var(--dim); font-size: 15px; }
+  .lead strong { color: var(--fg); }
 
-  .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
-  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
-          padding: 12px 18px; min-width: 150px; flex: 1; }
-  .stat .n { font-family: var(--mono); font-size: 24px; }
-  .stat .l { color: var(--dim); font-size: 12.5px; margin-top: 2px; }
+  .summary { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-bottom: 8px;
+             padding: 11px 16px; background: var(--panel); border: 1px solid var(--line);
+             border-radius: 6px; font-size: 13px; color: var(--dim); }
+  .summary span { white-space: nowrap; }
+  .summary b { font-family: var(--mono); font-size: 15px; color: var(--fg);
+               font-weight: 500; margin-right: 6px; }
 
   .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; }
   table { width: 100%; border-collapse: collapse; min-width: 940px; }
@@ -100,8 +98,9 @@
     body { padding: 28px 16px 64px; font-size: 14.5px; }
     h1 { font-size: 21px; }
     h2 { margin: 34px 0 12px; }
-    .claim, .note, .thesis .card { padding: 14px 16px; }
-    .stat { min-width: 0; flex-basis: calc(50% - 6px); }
+    .note, .thesis .card { padding: 14px 16px; }
+    .lead { font-size: 14.5px; }
+    .summary { gap: 5px 16px; padding: 10px 13px; }
 
     /* The ranked table stops being a table and becomes one card per row —
        a 940px-wide grid is unreadable on a phone even with a scroll bar. */
@@ -131,22 +130,19 @@
 <body>
 <div class="wrap">
   <h1>Merge Queue Census</h1>
-  <div class="meta">generated 2026-08-25 22:10 UTC · merge-queue-census v0.1.0 · every number links to its source</div>
+  <div class="meta">generated 2026-08-26 00:26 UTC · merge-queue-census v0.1.0 · every number links to its source</div>
 
-  <div class="claim">
-    <p><strong>162 organizations running a merge queue in public today</strong>, ranked by
-    observed queue volume and segmented by which vendor they run.</p>
-    <p>This is a partial view. Private repositories are invisible to this method, so the large
-    private-monorepo buyers do not appear here. Every organization that does appear is qualified by
-    behavior — it runs a merge queue, in public, and the evidence link proves it.</p>
-  </div>
+  <p class="lead"><strong>163 organizations running a merge queue in public today</strong>,
+  ranked by observed queue volume and segmented by which vendor they run. Private repositories are invisible
+  to this method, so the largest buyers do not appear here — but every organization that does is qualified by
+  behavior, with an evidence link that proves it.</p>
 
-  <div class="stats">
-    <div class="stat"><div class="n">57</div><div class="l">classified as companies</div></div>
-    <div class="stat"><div class="n">14</div><div class="l">on a competitor</div></div>
-    <div class="stat"><div class="n">50</div><div class="l">native at scale</div></div>
-    <div class="stat"><div class="n">98</div><div class="l">native</div></div>
-    <div class="stat"><div class="n">1</div><div class="l">excluded as customers</div></div>
+  <div class="summary">
+    <span><b>60</b>companies</span>
+    <span><b>13</b>on a competitor</span>
+    <span><b>52</b>native at scale</span>
+    <span><b>98</b>native</span>
+    <span><b>1</b>excluded as customers</span>
   </div>
 
   <section class="thesis">
@@ -196,13 +192,13 @@
   <div class="funnel">
     <span><strong>3,063</strong> repos discovered</span>
     <span class="arrow">→</span>
-    <span><strong>2,274</strong> owners</span>
+    <span><strong>2,275</strong> owners</span>
     <span class="arrow">→</span>
-    <span><strong>572</strong> rejected by qualification</span>
+    <span><strong>616</strong> rejected by qualification</span>
     <span class="arrow">→</span>
-    <span><strong>87</strong> configured but idle</span>
+    <span><strong>86</strong> configured but idle</span>
     <span class="arrow">→</span>
-    <span class="final"><strong>163</strong> running a queue</span>
+    <span class="final"><strong>164</strong> running a queue</span>
   </div>
 
   <ul class="legend">
@@ -211,7 +207,7 @@
     <li><span class="pill cool">Native</span> Runs GitHub&#39;s free queue at lower volume. Adoption proven, urgency not yet.</li>
   </ul>
 
-  <h2>Displacement <span class="count">14</span></h2>
+  <h2>Displacement <span class="count">13</span></h2>
       <p class="segnote">Pays a competitor for a merge queue today. Budget and intent already proven. Volume counts <strong>merges by that vendor's bot</strong>.</p>
       <div class="scroll">
         <table>
@@ -376,24 +372,6 @@
   </tr><tr class="row dimmed">
     <td class="rank mono" data-label="Rank">8</td>
     <td>
-      <div class="org"><a href="https://github.com/rabbitmq">RabbitMQ</a></div>
-      <div class="sub mono">rabbitmq · <a href="https://rabbitmq.com">rabbitmq.com</a></div>
-    </td>
-    <td data-label="Segment"><span class="pill hot">Displacement</span><div class="entity non_buyer">Unclear</div><div class="why" title="No description or backer named; repos just say &#39;Open source RabbitMQ&#39;, so governance/commercial backing is not specified.">No description or backer named; repos just say &#39;Open source RabbitMQ&#39;, so governance/commercial backing is not specified.</div></td>
-    <td class="vol mono" data-label="Volume">4,398<span class="unit">merges by vendor bot</span></td>
-    <td class="mono dim" data-label="Running">Mergify<span class="unit">100+ contributors</span></td>
-    <td data-label="Evidence"><ul class="repos"><li>
-        <a href="https://github.com/rabbitmq/rabbitmq-server/pulls?q=is%3Apr%20is%3Amerged%20author%3Aapp%2Fmergify">rabbitmq/rabbitmq-server</a>
-        <span class="mono dim">4,385</span>
-        <span class="detail">100+ contributors</span>
-      </li><li>
-        <a href="https://github.com/rabbitmq/rabbitmq-java-client/pulls?q=is%3Apr%20is%3Amerged%20author%3Aapp%2Fmergify">rabbitmq/rabbitmq-java-client</a>
-        <span class="mono dim">13</span>
-        <span class="detail">63 contributors</span>
-      </li></ul></td>
-  </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">9</td>
-    <td>
       <div class="org"><a href="https://github.com/harvester">Harvester</a></div>
       <div class="sub mono">harvester · <a href="https://harvesterhci.io">harvesterhci.io</a></div>
     </td>
@@ -418,7 +396,7 @@
         <span class="detail">18 contributors</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">10</td>
+    <td class="rank mono" data-label="Rank">9</td>
     <td>
       <div class="org"><a href="https://github.com/gazebosim">Gazebo</a></div>
       <div class="sub mono">gazebosim · <a href="https://gazebosim.org">gazebosim.org</a></div>
@@ -444,7 +422,7 @@
         <span class="detail">61 contributors</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">11</td>
+    <td class="rank mono" data-label="Rank">10</td>
     <td>
       <div class="org"><a href="https://github.com/celestiaorg">Celestia</a></div>
       <div class="sub mono">celestiaorg · <a href="https://celestia.org">celestia.org</a></div>
@@ -470,7 +448,7 @@
         <span class="detail">13 contributors</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">12</td>
+    <td class="rank mono" data-label="Rank">11</td>
     <td>
       <div class="org"><a href="https://github.com/haskell">Haskell</a></div>
       <div class="sub mono">haskell · <a href="https://haskell.org">haskell.org</a></div>
@@ -492,7 +470,7 @@
         <span class="detail">27 contributors</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">13</td>
+    <td class="rank mono" data-label="Rank">12</td>
     <td>
       <div class="org"><a href="https://github.com/ros-navigation">ROS Navigation</a></div>
       <div class="sub mono">ros-navigation · <a href="https://nav2.org">nav2.org</a></div>
@@ -510,7 +488,7 @@
         <span class="detail">100+ contributors</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">14</td>
+    <td class="rank mono" data-label="Rank">13</td>
     <td>
       <div class="org"><a href="https://github.com/openebs">OpenEBS</a></div>
       <div class="sub mono">openebs · <a href="https://openebs.io">openebs.io</a></div>
@@ -529,7 +507,7 @@
       </li></ul></td>
   </tr></tbody>
         </table>
-      </div><h2>Native at scale <span class="count">50</span></h2>
+      </div><h2>Native at scale <span class="count">52</span></h2>
       <p class="segnote">Runs GitHub&#39;s free queue at volume. Native has no parallel queues or affected-target batching. Volume counts <strong>merge_group workflow runs</strong>.</p>
       <div class="scroll">
         <table>
@@ -690,6 +668,20 @@
   </tr><tr class="row">
     <td class="rank mono" data-label="Rank">8</td>
     <td>
+      <div class="org"><a href="https://github.com/openobserve">OpenObserve</a></div>
+      <div class="sub mono">openobserve · <a href="https://openobserve.ai">openobserve.ai</a></div>
+    </td>
+    <td data-label="Segment"><span class="pill warm">Native at scale</span><div class="entity buyer">Company</div><div class="why" title="Description markets an observability engine; flagship repo pitches an alternative to Datadog/Splunk, indicating a product-focused company.">Description markets an observability engine; flagship repo pitches an alternative to Datadog/Splunk, indicating a product-focused company.</div></td>
+    <td class="vol mono" data-label="Volume">1,847<span class="unit">batches through the queue</span></td>
+    <td class="mono dim" data-label="Running">GitHub native merge queue<span class="unit">100+ contributors</span></td>
+    <td data-label="Evidence"><ul class="repos"><li>
+        <a href="https://github.com/openobserve/openobserve/actions?query=event%3Amerge_group">openobserve/openobserve</a>
+        <span class="mono dim">1,847</span>
+        <span class="detail">100+ contributors · 12,310 runs ÷ 6.7 workflows</span>
+      </li></ul></td>
+  </tr><tr class="row">
+    <td class="rank mono" data-label="Rank">9</td>
+    <td>
       <div class="org"><a href="https://github.com/databricks">Databricks</a></div>
       <div class="sub mono">databricks · <a href="https://databricks.com">databricks.com</a></div>
     </td>
@@ -710,7 +702,7 @@
         <span class="detail">17 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">9</td>
+    <td class="rank mono" data-label="Rank">10</td>
     <td>
       <div class="org"><a href="https://github.com/canonical">Canonical</a></div>
       <div class="sub mono">canonical · <a href="https://canonical.com">canonical.com</a></div>
@@ -736,7 +728,7 @@
         <span class="detail">19 contributors · 212 runs ÷ 2.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">10</td>
+    <td class="rank mono" data-label="Rank">11</td>
     <td>
       <div class="org"><a href="https://github.com/aws">Amazon Web Services</a></div>
       <div class="sub mono">aws · <a href="https://amazon.com">amazon.com</a></div>
@@ -762,7 +754,7 @@
         <span class="detail">100+ contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">11</td>
+    <td class="rank mono" data-label="Rank">12</td>
     <td>
       <div class="org"><a href="https://github.com/nginx">nginx</a></div>
       <div class="sub mono">nginx · <a href="https://nginx.org">nginx.org</a></div>
@@ -780,7 +772,7 @@
         <span class="detail">17 contributors · 160 runs ÷ 4 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">12</td>
+    <td class="rank mono" data-label="Rank">13</td>
     <td>
       <div class="org"><a href="https://github.com/getsentry">Sentry</a></div>
       <div class="sub mono">getsentry · <a href="https://sentry.io">sentry.io</a></div>
@@ -794,7 +786,7 @@
         <span class="detail">100+ contributors · 8,330 runs ÷ 5.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">13</td>
+    <td class="rank mono" data-label="Rank">14</td>
     <td>
       <div class="org"><a href="https://github.com/gravitational">Teleport</a></div>
       <div class="sub mono">gravitational · <a href="https://goteleport.com">goteleport.com</a></div>
@@ -812,7 +804,7 @@
         <span class="detail">10 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">14</td>
+    <td class="rank mono" data-label="Rank">15</td>
     <td>
       <div class="org"><a href="https://github.com/lambdaclass">Lambdaclass</a></div>
       <div class="sub mono">lambdaclass · <a href="https://lambdaclass.com">lambdaclass.com</a></div>
@@ -834,7 +826,21 @@
         <span class="detail">13 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">15</td>
+    <td class="rank mono" data-label="Rank">16</td>
+    <td>
+      <div class="org"><a href="https://github.com/liam-hq">Liam</a></div>
+      <div class="sub mono">liam-hq · <a href="https://liambx.com">liambx.com</a></div>
+    </td>
+    <td data-label="Segment"><span class="pill warm">Native at scale</span><div class="entity buyer">Company</div><div class="why" title="The org self-describes as a “No-code platform,” indicating a commercial product company.">The org self-describes as a “No-code platform,” indicating a commercial product company.</div></td>
+    <td class="vol mono" data-label="Volume">1,181<span class="unit">batches through the queue</span></td>
+    <td class="mono dim" data-label="Running">GitHub native merge queue<span class="unit">32 contributors</span></td>
+    <td data-label="Evidence"><ul class="repos"><li>
+        <a href="https://github.com/liam-hq/liam/actions?query=event%3Amerge_group">liam-hq/liam</a>
+        <span class="mono dim">1,181</span>
+        <span class="detail">32 contributors · 5,905 runs ÷ 5 workflows</span>
+      </li></ul></td>
+  </tr><tr class="row">
+    <td class="rank mono" data-label="Rank">17</td>
     <td>
       <div class="org"><a href="https://github.com/tenstorrent">Tenstorrent AI</a></div>
       <div class="sub mono">tenstorrent · <a href="https://tenstorrent.com">tenstorrent.com</a></div>
@@ -848,7 +854,7 @@
         <span class="detail">80 contributors · 2,044 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">16</td>
+    <td class="rank mono" data-label="Rank">18</td>
     <td>
       <div class="org"><a href="https://github.com/grafana">Grafana Labs</a></div>
       <div class="sub mono">grafana · <a href="https://grafana.com">grafana.com</a></div>
@@ -870,7 +876,7 @@
         <span class="detail">15 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">17</td>
+    <td class="rank mono" data-label="Rank">19</td>
     <td>
       <div class="org"><a href="https://github.com/metriport">Metriport</a></div>
       <div class="sub mono">metriport · <a href="https://metriport.com">metriport.com</a></div>
@@ -884,7 +890,7 @@
         <span class="detail">21 contributors · 13,792 runs ÷ 16.7 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">18</td>
+    <td class="rank mono" data-label="Rank">20</td>
     <td>
       <div class="org"><a href="https://github.com/NordSecurity">Nord Security</a></div>
       <div class="sub mono">NordSecurity · <a href="https://nordsecurity.com">nordsecurity.com</a></div>
@@ -898,7 +904,7 @@
         <span class="detail">38 contributors · 3,220 runs ÷ 4 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">19</td>
+    <td class="rank mono" data-label="Rank">21</td>
     <td>
       <div class="org"><a href="https://github.com/Layr-Labs">Eigen Labs</a></div>
       <div class="sub mono">Layr-Labs · <a href="https://eigenlabs.org">eigenlabs.org</a></div>
@@ -916,7 +922,7 @@
         <span class="detail">17 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">20</td>
+    <td class="rank mono" data-label="Rank">22</td>
     <td>
       <div class="org"><a href="https://github.com/Quantinuum">Quantinuum Ltd</a></div>
       <div class="sub mono">Quantinuum · <a href="https://quantinuum.com">quantinuum.com</a></div>
@@ -938,7 +944,7 @@
         <span class="detail">9 contributors · 27 runs ÷ 3 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">21</td>
+    <td class="rank mono" data-label="Rank">23</td>
     <td>
       <div class="org"><a href="https://github.com/giantswarm">Giant Swarm</a></div>
       <div class="sub mono">giantswarm · <a href="https://giantswarm.io">giantswarm.io</a></div>
@@ -956,7 +962,7 @@
         <span class="detail">10 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">22</td>
+    <td class="rank mono" data-label="Rank">24</td>
     <td>
       <div class="org"><a href="https://github.com/renovatebot">Renovate Bot</a></div>
       <div class="sub mono">renovatebot · <a href="https://mend.io">mend.io</a></div>
@@ -970,7 +976,7 @@
         <span class="detail">100+ contributors · 8,179 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">23</td>
+    <td class="rank mono" data-label="Rank">25</td>
     <td>
       <div class="org"><a href="https://github.com/starkware-libs">StarkWare Libs</a></div>
       <div class="sub mono">starkware-libs · <a href="https://starkware.co">starkware.co</a></div>
@@ -992,7 +998,7 @@
         <span class="detail">37 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">24</td>
+    <td class="rank mono" data-label="Rank">26</td>
     <td>
       <div class="org"><a href="https://github.com/primer">Primer</a></div>
       <div class="sub mono">primer · <a href="https://primer.style">primer.style</a></div>
@@ -1006,7 +1012,7 @@
         <span class="detail">100+ contributors · 3,421 runs ÷ 2.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">25</td>
+    <td class="rank mono" data-label="Rank">27</td>
     <td>
       <div class="org"><a href="https://github.com/Azure">Microsoft Azure</a></div>
       <div class="sub mono">Azure · <a href="https://docs.microsoft.com">docs.microsoft.com</a></div>
@@ -1024,7 +1030,7 @@
         <span class="detail">23 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">26</td>
+    <td class="rank mono" data-label="Rank">28</td>
     <td>
       <div class="org"><a href="https://github.com/carbon-design-system">Carbon Design System</a></div>
       <div class="sub mono">carbon-design-system · <a href="https://carbondesignsystem.com">carbondesignsystem.com</a></div>
@@ -1038,7 +1044,7 @@
         <span class="detail">100+ contributors · 3,740 runs ÷ 4 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">27</td>
+    <td class="rank mono" data-label="Rank">29</td>
     <td>
       <div class="org"><a href="https://github.com/frequenz-floss">Frequenz Open Source</a></div>
       <div class="sub mono">frequenz-floss · <a href="https://frequenz.com">frequenz.com</a></div>
@@ -1064,7 +1070,7 @@
         <span class="detail">9 contributors · 399 runs ÷ 6.7 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">28</td>
+    <td class="rank mono" data-label="Rank">30</td>
     <td>
       <div class="org"><a href="https://github.com/cdklabs">CDK Labs at AWS</a></div>
       <div class="sub mono">cdklabs · <a href="https://aws.amazon.com">aws.amazon.com</a></div>
@@ -1090,7 +1096,7 @@
         <span class="detail">10 contributors · 118 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">29</td>
+    <td class="rank mono" data-label="Rank">31</td>
     <td>
       <div class="org"><a href="https://github.com/openvinotoolkit">OpenVINO™ Toolkit</a></div>
       <div class="sub mono">openvinotoolkit · <a href="https://docs.openvino.ai">docs.openvino.ai</a></div>
@@ -1112,7 +1118,7 @@
         <span class="detail">36 contributors · 1,180 runs ÷ 5 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">30</td>
+    <td class="rank mono" data-label="Rank">32</td>
     <td>
       <div class="org"><a href="https://github.com/servo">Servo</a></div>
       <div class="sub mono">servo · <a href="https://servo.org">servo.org</a></div>
@@ -1138,7 +1144,7 @@
         <span class="detail">62 contributors · 1 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">31</td>
+    <td class="rank mono" data-label="Rank">33</td>
     <td>
       <div class="org"><a href="https://github.com/open-telemetry">OpenTelemetry - CNCF</a></div>
       <div class="sub mono">open-telemetry · <a href="https://opentelemetry.io">opentelemetry.io</a></div>
@@ -1164,7 +1170,7 @@
         <span class="detail">100+ contributors · 930 runs ÷ 2.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">32</td>
+    <td class="rank mono" data-label="Rank">34</td>
     <td>
       <div class="org"><a href="https://github.com/noir-lang">noir-lang</a></div>
       <div class="sub mono">noir-lang · <a href="https://noir-lang.org">noir-lang.org</a></div>
@@ -1178,7 +1184,7 @@
         <span class="detail">100+ contributors · 19,915 runs ÷ 6.7 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">33</td>
+    <td class="rank mono" data-label="Rank">35</td>
     <td>
       <div class="org"><a href="https://github.com/erigontech">Erigon</a></div>
       <div class="sub mono">erigontech · <a href="https://erigon.tech">erigon.tech</a></div>
@@ -1192,7 +1198,7 @@
         <span class="detail">100+ contributors · 2,914 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">34</td>
+    <td class="rank mono" data-label="Rank">36</td>
     <td>
       <div class="org"><a href="https://github.com/rust-lang">The Rust Programming Language</a></div>
       <div class="sub mono">rust-lang · <a href="https://rust-lang.org">rust-lang.org</a></div>
@@ -1218,7 +1224,7 @@
         <span class="detail">33 contributors · 86 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">35</td>
+    <td class="rank mono" data-label="Rank">37</td>
     <td>
       <div class="org"><a href="https://github.com/base">Base</a></div>
       <div class="sub mono">base · <a href="https://base.org">base.org</a></div>
@@ -1232,7 +1238,7 @@
         <span class="detail">100+ contributors · 15,536 runs ÷ 5.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">36</td>
+    <td class="rank mono" data-label="Rank">38</td>
     <td>
       <div class="org"><a href="https://github.com/NomicFoundation">Nomic Foundation</a></div>
       <div class="sub mono">NomicFoundation · <a href="https://nomic.foundation">nomic.foundation</a></div>
@@ -1258,7 +1264,7 @@
         <span class="detail">100+ contributors · 523 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">37</td>
+    <td class="rank mono" data-label="Rank">39</td>
     <td>
       <div class="org"><a href="https://github.com/Opetushallitus">Opetushallitus - Finnish National Agency for Education</a></div>
       <div class="sub mono">Opetushallitus · <a href="https://oph.fi">oph.fi</a></div>
@@ -1276,7 +1282,7 @@
         <span class="detail">31 contributors · 247 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">38</td>
+    <td class="rank mono" data-label="Rank">40</td>
     <td>
       <div class="org"><a href="https://github.com/navikt">Nav IT</a></div>
       <div class="sub mono">navikt · <a href="https://nav.no">nav.no</a></div>
@@ -1302,7 +1308,7 @@
         <span class="detail">13 contributors · 122 runs ÷ 1.6 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">39</td>
+    <td class="rank mono" data-label="Rank">41</td>
     <td>
       <div class="org"><a href="https://github.com/duckdb">DuckDB Foundation</a></div>
       <div class="sub mono">duckdb · <a href="https://duckdb.org">duckdb.org</a></div>
@@ -1320,7 +1326,7 @@
         <span class="detail">21 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">40</td>
+    <td class="rank mono" data-label="Rank">42</td>
     <td>
       <div class="org"><a href="https://github.com/RIOT-OS">RIOT</a></div>
       <div class="sub mono">RIOT-OS · <a href="https://riot-os.org">riot-os.org</a></div>
@@ -1334,7 +1340,7 @@
         <span class="detail">100+ contributors · 6,204 runs ÷ 5.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">41</td>
+    <td class="rank mono" data-label="Rank">43</td>
     <td>
       <div class="org"><a href="https://github.com/freedomofpress">Freedom of the Press Foundation</a></div>
       <div class="sub mono">freedomofpress · <a href="https://freedom.press">freedom.press</a></div>
@@ -1356,7 +1362,7 @@
         <span class="detail">100+ contributors · 638 runs ÷ 5 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">42</td>
+    <td class="rank mono" data-label="Rank">44</td>
     <td>
       <div class="org"><a href="https://github.com/govuk-one-login">GOV.UK One Login</a></div>
       <div class="sub mono">govuk-one-login · <a href="https://sign-in.service.gov.uk">sign-in.service.gov.uk</a></div>
@@ -1382,7 +1388,7 @@
         <span class="detail">52 contributors · 72 runs ÷ 6 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">43</td>
+    <td class="rank mono" data-label="Rank">45</td>
     <td>
       <div class="org"><a href="https://github.com/mozilla">Mozilla</a></div>
       <div class="sub mono">mozilla · <a href="https://mozilla.org">mozilla.org</a></div>
@@ -1404,7 +1410,7 @@
         <span class="detail">29 contributors · 250 runs ÷ 10 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">44</td>
+    <td class="rank mono" data-label="Rank">46</td>
     <td>
       <div class="org"><a href="https://github.com/kyma-project">Kyma</a></div>
       <div class="sub mono">kyma-project · <a href="https://kyma-project.io">kyma-project.io</a></div>
@@ -1418,7 +1424,7 @@
         <span class="detail">100+ contributors · 3,615 runs ÷ 4 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">45</td>
+    <td class="rank mono" data-label="Rank">47</td>
     <td>
       <div class="org"><a href="https://github.com/chipsalliance">CHIPS Alliance</a></div>
       <div class="sub mono">chipsalliance · <a href="https://chipsalliance.org">chipsalliance.org</a></div>
@@ -1432,7 +1438,7 @@
         <span class="detail">60 contributors · 4,482 runs ÷ 5.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">46</td>
+    <td class="rank mono" data-label="Rank">48</td>
     <td>
       <div class="org"><a href="https://github.com/cdk8s-team">cdk8s-team</a></div>
       <div class="sub mono">cdk8s-team · <a href="https://cdk8s.io">cdk8s.io</a></div>
@@ -1450,7 +1456,7 @@
         <span class="detail">32 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">47</td>
+    <td class="rank mono" data-label="Rank">49</td>
     <td>
       <div class="org"><a href="https://github.com/perses">Perses</a></div>
       <div class="sub mono">perses · <a href="https://perses.dev">perses.dev</a></div>
@@ -1472,7 +1478,7 @@
         <span class="detail">15 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">48</td>
+    <td class="rank mono" data-label="Rank">50</td>
     <td>
       <div class="org"><a href="https://github.com/opencompl">opencompl</a></div>
       <div class="sub mono">opencompl · <a href="https://grosser.science">grosser.science</a></div>
@@ -1486,7 +1492,7 @@
         <span class="detail">24 contributors · 1,184 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">49</td>
+    <td class="rank mono" data-label="Rank">51</td>
     <td>
       <div class="org"><a href="https://github.com/delta-io">Delta Lake</a></div>
       <div class="sub mono">delta-io · <a href="https://delta.io">delta.io</a></div>
@@ -1504,7 +1510,7 @@
         <span class="detail">100+ contributors · 132 runs ÷ 4 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">50</td>
+    <td class="rank mono" data-label="Rank">52</td>
     <td>
       <div class="org"><a href="https://github.com/commonwarexyz">commonware</a></div>
       <div class="sub mono">commonwarexyz · <a href="https://commonware.xyz">commonware.xyz</a></div>
@@ -1870,6 +1876,20 @@
   </tr><tr class="row">
     <td class="rank mono" data-label="Rank">19</td>
     <td>
+      <div class="org"><a href="https://github.com/well-typed">Well-Typed LLP</a></div>
+      <div class="sub mono">well-typed · <a href="https://well-typed.com">well-typed.com</a></div>
+    </td>
+    <td data-label="Segment"><span class="pill cool">Native</span><div class="entity buyer">Company</div><div class="why" title="Description says &#39;The Haskell Consultants&#39; and display name includes &#39;LLP&#39;, indicating a consulting business.">Description says &#39;The Haskell Consultants&#39; and display name includes &#39;LLP&#39;, indicating a consulting business.</div></td>
+    <td class="vol mono" data-label="Volume">72<span class="unit">batches through the queue</span></td>
+    <td class="mono dim" data-label="Running">GitHub native merge queue<span class="unit">10 contributors</span></td>
+    <td data-label="Evidence"><ul class="repos"><li>
+        <a href="https://github.com/well-typed/libclang-bindings/actions?query=event%3Amerge_group">well-typed/libclang-bindings</a>
+        <span class="mono dim">72</span>
+        <span class="detail">10 contributors · 289 runs ÷ 4 workflows</span>
+      </li></ul></td>
+  </tr><tr class="row">
+    <td class="rank mono" data-label="Rank">20</td>
+    <td>
       <div class="org"><a href="https://github.com/scaleway">Scaleway</a></div>
       <div class="sub mono">scaleway · <a href="https://scaleway.com">scaleway.com</a></div>
     </td>
@@ -1890,7 +1910,7 @@
         <span class="detail">21 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">20</td>
+    <td class="rank mono" data-label="Rank">21</td>
     <td>
       <div class="org"><a href="https://github.com/coveo">Coveo</a></div>
       <div class="sub mono">coveo · <a href="https://coveo.com">coveo.com</a></div>
@@ -1904,7 +1924,7 @@
         <span class="detail">97 contributors · 189 runs ÷ 2.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">21</td>
+    <td class="rank mono" data-label="Rank">22</td>
     <td>
       <div class="org"><a href="https://github.com/target">Target</a></div>
       <div class="sub mono">target · <a href="https://tech.target.com">tech.target.com</a></div>
@@ -1918,7 +1938,7 @@
         <span class="detail">11 contributors · 64 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">22</td>
+    <td class="rank mono" data-label="Rank">23</td>
     <td>
       <div class="org"><a href="https://github.com/software-mansion">Software Mansion</a></div>
       <div class="sub mono">software-mansion · <a href="https://swmansion.com">swmansion.com</a></div>
@@ -1944,7 +1964,7 @@
         <span class="detail">50 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">23</td>
+    <td class="rank mono" data-label="Rank">24</td>
     <td>
       <div class="org"><a href="https://github.com/aquasecurity">Aqua Security</a></div>
       <div class="sub mono">aquasecurity · <a href="https://aquasec.com">aquasec.com</a></div>
@@ -1958,7 +1978,7 @@
         <span class="detail">62 contributors · 110 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">24</td>
+    <td class="rank mono" data-label="Rank">25</td>
     <td>
       <div class="org"><a href="https://github.com/authzed">authzed</a></div>
       <div class="sub mono">authzed · <a href="https://authzed.com">authzed.com</a></div>
@@ -1972,7 +1992,7 @@
         <span class="detail">23 contributors · 123 runs ÷ 2.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">25</td>
+    <td class="rank mono" data-label="Rank">26</td>
     <td>
       <div class="org"><a href="https://github.com/tensorchord">TensorChord</a></div>
       <div class="sub mono">tensorchord · <a href="https://vectorchord.ai">vectorchord.ai</a></div>
@@ -1994,7 +2014,7 @@
         <span class="detail">14 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">26</td>
+    <td class="rank mono" data-label="Rank">27</td>
     <td>
       <div class="org"><a href="https://github.com/smartcontractkit">SmartContract</a></div>
       <div class="sub mono">smartcontractkit · <a href="https://chain.link">chain.link</a></div>
@@ -2012,7 +2032,7 @@
         <span class="detail">100+ contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">27</td>
+    <td class="rank mono" data-label="Rank">28</td>
     <td>
       <div class="org"><a href="https://github.com/geo-engine">Geo Engine</a></div>
       <div class="sub mono">geo-engine · <a href="https://geoengine.de">geoengine.de</a></div>
@@ -2026,7 +2046,7 @@
         <span class="detail">9 contributors · 13 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">28</td>
+    <td class="rank mono" data-label="Rank">29</td>
     <td>
       <div class="org"><a href="https://github.com/callstack">Callstack</a></div>
       <div class="sub mono">callstack · <a href="https://callstack.com">callstack.com</a></div>
@@ -2044,7 +2064,7 @@
         <span class="detail">53 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">29</td>
+    <td class="rank mono" data-label="Rank">30</td>
     <td>
       <div class="org"><a href="https://github.com/influxdata">InfluxData</a></div>
       <div class="sub mono">influxdata · <a href="https://influxdata.com">influxdata.com</a></div>
@@ -2058,7 +2078,7 @@
         <span class="detail">100+ contributors · 8 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">30</td>
+    <td class="rank mono" data-label="Rank">31</td>
     <td>
       <div class="org"><a href="https://github.com/ansible">Ansible</a></div>
       <div class="sub mono">ansible · <a href="https://ansible.com">ansible.com</a></div>
@@ -2084,7 +2104,7 @@
         <span class="detail">77 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">31</td>
+    <td class="rank mono" data-label="Rank">32</td>
     <td>
       <div class="org"><a href="https://github.com/input-output-hk">Input Output</a></div>
       <div class="sub mono">input-output-hk · <a href="https://iohk.io">iohk.io</a></div>
@@ -2110,7 +2130,7 @@
         <span class="detail">28 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">32</td>
+    <td class="rank mono" data-label="Rank">33</td>
     <td>
       <div class="org"><a href="https://github.com/skip-mev">Cøsmos Labs</a></div>
       <div class="sub mono">skip-mev · <a href="https://cosmoslabs.io">cosmoslabs.io</a></div>
@@ -2124,7 +2144,7 @@
         <span class="detail">10 contributors · 2 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">33</td>
+    <td class="rank mono" data-label="Rank">34</td>
     <td>
       <div class="org"><a href="https://github.com/capire">Capire Docs &amp; Samples</a></div>
       <div class="sub mono">capire · <a href="https://cap.cloud.sap">cap.cloud.sap</a></div>
@@ -2138,7 +2158,7 @@
         <span class="detail">100+ contributors · 250 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">34</td>
+    <td class="rank mono" data-label="Rank">35</td>
     <td>
       <div class="org"><a href="https://github.com/quantumlib">Quantumlib</a></div>
       <div class="sub mono">quantumlib · <a href="https://quantumai.google">quantumai.google</a></div>
@@ -2156,7 +2176,7 @@
         <span class="detail">41 contributors · 45 runs ÷ 1.8 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">35</td>
+    <td class="rank mono" data-label="Rank">36</td>
     <td>
       <div class="org"><a href="https://github.com/philips-software">Philips Software</a></div>
       <div class="sub mono">philips-software · <a href="https://philips.com">philips.com</a></div>
@@ -2174,7 +2194,7 @@
         <span class="detail">37 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">36</td>
+    <td class="rank mono" data-label="Rank">37</td>
     <td>
       <div class="org"><a href="https://github.com/dotnet">.NET Platform</a></div>
       <div class="sub mono">dotnet · <a href="https://dot.net">dot.net</a></div>
@@ -2192,7 +2212,7 @@
         <span class="detail">9 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">37</td>
+    <td class="rank mono" data-label="Rank">38</td>
     <td>
       <div class="org"><a href="https://github.com/awslabs">Amazon Web Services - Labs</a></div>
       <div class="sub mono">awslabs · <a href="https://amazon.com">amazon.com</a></div>
@@ -2214,7 +2234,7 @@
         <span class="detail">10 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">38</td>
+    <td class="rank mono" data-label="Rank">39</td>
     <td>
       <div class="org"><a href="https://github.com/knurling-rs">Knurling</a></div>
       <div class="sub mono">knurling-rs · <a href="https://knurling.ferrous-systems.com">knurling.ferrous-systems.com</a></div>
@@ -2232,7 +2252,7 @@
         <span class="detail">22 contributors · 24 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">39</td>
+    <td class="rank mono" data-label="Rank">40</td>
     <td>
       <div class="org"><a href="https://github.com/databrickslabs">Databricks Labs</a></div>
       <div class="sub mono">databrickslabs · <a href="https://databricks.com">databricks.com</a></div>
@@ -2250,7 +2270,7 @@
         <span class="detail">62 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row">
-    <td class="rank mono" data-label="Rank">40</td>
+    <td class="rank mono" data-label="Rank">41</td>
     <td>
       <div class="org"><a href="https://github.com/sysdiglabs">Sysdig</a></div>
       <div class="sub mono">sysdiglabs · <a href="https://sysdig.com">sysdig.com</a></div>
@@ -2264,7 +2284,7 @@
         <span class="detail">71 contributors · 36 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">41</td>
+    <td class="rank mono" data-label="Rank">42</td>
     <td>
       <div class="org"><a href="https://github.com/nix-community">Nix community projects</a></div>
       <div class="sub mono">nix-community · <a href="https://nix-community.org">nix-community.org</a></div>
@@ -2290,7 +2310,7 @@
         <span class="detail">78 contributors · 40 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">42</td>
+    <td class="rank mono" data-label="Rank">43</td>
     <td>
       <div class="org"><a href="https://github.com/CDCgov">Centers for Disease Control and Prevention</a></div>
       <div class="sub mono">CDCgov · <a href="https://cdc.gov">cdc.gov</a></div>
@@ -2304,7 +2324,7 @@
         <span class="detail">20 contributors · 3,094 runs ÷ 6.7 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">43</td>
+    <td class="rank mono" data-label="Rank">44</td>
     <td>
       <div class="org"><a href="https://github.com/pyvista">PyVista</a></div>
       <div class="sub mono">pyvista · <a href="https://pyvista.org">pyvista.org</a></div>
@@ -2318,7 +2338,7 @@
         <span class="detail">100+ contributors · 3,068 runs ÷ 6.7 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">44</td>
+    <td class="rank mono" data-label="Rank">45</td>
     <td>
       <div class="org"><a href="https://github.com/open-feature">OpenFeature</a></div>
       <div class="sub mono">open-feature · <a href="https://openfeature.dev">openfeature.dev</a></div>
@@ -2340,7 +2360,7 @@
         <span class="detail">22 contributors · 132 runs ÷ 2.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">45</td>
+    <td class="rank mono" data-label="Rank">46</td>
     <td>
       <div class="org"><a href="https://github.com/IntersectMBO">Intersect MBO</a></div>
       <div class="sub mono">IntersectMBO · <a href="https://intersectmbo.org">intersectmbo.org</a></div>
@@ -2358,7 +2378,7 @@
         <span class="detail">87 contributors · 424 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">46</td>
+    <td class="rank mono" data-label="Rank">47</td>
     <td>
       <div class="org"><a href="https://github.com/CliMA">Climate Modeling Alliance</a></div>
       <div class="sub mono">CliMA · <a href="https://clima.caltech.edu">clima.caltech.edu</a></div>
@@ -2384,7 +2404,7 @@
         <span class="detail">16 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">47</td>
+    <td class="rank mono" data-label="Rank">48</td>
     <td>
       <div class="org"><a href="https://github.com/NOAA-GFDL">NOAA - Geophysical Fluid Dynamics Laboratory</a></div>
       <div class="sub mono">NOAA-GFDL · <a href="https://gfdl.noaa.gov">gfdl.noaa.gov</a></div>
@@ -2402,7 +2422,7 @@
         <span class="detail">28 contributors · 116 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">48</td>
+    <td class="rank mono" data-label="Rank">49</td>
     <td>
       <div class="org"><a href="https://github.com/dfinity">DFINITY</a></div>
       <div class="sub mono">dfinity · <a href="https://dfinity.org">dfinity.org</a></div>
@@ -2428,7 +2448,7 @@
         <span class="detail">10 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">49</td>
+    <td class="rank mono" data-label="Rank">50</td>
     <td>
       <div class="org"><a href="https://github.com/Milkdown">Milkdown</a></div>
       <div class="sub mono">Milkdown · <a href="https://milkdown.dev">milkdown.dev</a></div>
@@ -2442,7 +2462,7 @@
         <span class="detail">71 contributors · 272 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">50</td>
+    <td class="rank mono" data-label="Rank">51</td>
     <td>
       <div class="org"><a href="https://github.com/tock">Tock Embedded OS</a></div>
       <div class="sub mono">tock · <a href="https://tockos.org">tockos.org</a></div>
@@ -2464,7 +2484,7 @@
         <span class="detail">54 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">51</td>
+    <td class="rank mono" data-label="Rank">52</td>
     <td>
       <div class="org"><a href="https://github.com/bevyengine">Bevy Engine</a></div>
       <div class="sub mono">bevyengine · <a href="https://bevy.org">bevy.org</a></div>
@@ -2482,7 +2502,7 @@
         <span class="detail">9 contributors · 3 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">52</td>
+    <td class="rank mono" data-label="Rank">53</td>
     <td>
       <div class="org"><a href="https://github.com/rust-osdev">Rust OSDev</a></div>
       <div class="sub mono">rust-osdev · <a href="https://rust-osdev.com">rust-osdev.com</a></div>
@@ -2500,7 +2520,7 @@
         <span class="detail">17 contributors · 26 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">53</td>
+    <td class="rank mono" data-label="Rank">54</td>
     <td>
       <div class="org"><a href="https://github.com/Zilliqa">Zilliqa</a></div>
       <div class="sub mono">Zilliqa · <a href="https://zilliqa.com">zilliqa.com</a></div>
@@ -2514,7 +2534,7 @@
         <span class="detail">23 contributors · 479 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">54</td>
+    <td class="rank mono" data-label="Rank">55</td>
     <td>
       <div class="org"><a href="https://github.com/DCS-Skunkworks">DCS Skunkworks</a></div>
       <div class="sub mono">DCS-Skunkworks · <a href="https://dcsbios.com">dcsbios.com</a></div>
@@ -2528,7 +2548,7 @@
         <span class="detail">36 contributors · 702 runs ÷ 2.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">55</td>
+    <td class="rank mono" data-label="Rank">56</td>
     <td>
       <div class="org"><a href="https://github.com/leanprover">Lean</a></div>
       <div class="sub mono">leanprover · <a href="https://lean-lang.org">lean-lang.org</a></div>
@@ -2542,7 +2562,7 @@
         <span class="detail">29 contributors · 2,213 runs ÷ 10 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">56</td>
+    <td class="rank mono" data-label="Rank">57</td>
     <td>
       <div class="org"><a href="https://github.com/praxis-proxy">Praxis</a></div>
       <div class="sub mono">praxis-proxy · <a href="https://praxis.fast">praxis.fast</a></div>
@@ -2556,7 +2576,7 @@
         <span class="detail">31 contributors · 1,892 runs ÷ 10 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">57</td>
+    <td class="rank mono" data-label="Rank">58</td>
     <td>
       <div class="org"><a href="https://github.com/actix">Actix</a></div>
       <div class="sub mono">actix · <a href="https://actix.rs">actix.rs</a></div>
@@ -2574,7 +2594,7 @@
         <span class="detail">100+ contributors · 67 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">58</td>
+    <td class="rank mono" data-label="Rank">59</td>
     <td>
       <div class="org"><a href="https://github.com/flatpak">Flatpak</a></div>
       <div class="sub mono">flatpak · <a href="https://flatpak.org">flatpak.org</a></div>
@@ -2592,7 +2612,7 @@
         <span class="detail">100+ contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">59</td>
+    <td class="rank mono" data-label="Rank">60</td>
     <td>
       <div class="org"><a href="https://github.com/pq-code-package">PQ Code Package</a></div>
       <div class="sub mono">pq-code-package · <a href="https://pqca.org">pqca.org</a></div>
@@ -2610,7 +2630,7 @@
         <span class="detail">20 contributors · 68 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">60</td>
+    <td class="rank mono" data-label="Rank">61</td>
     <td>
       <div class="org"><a href="https://github.com/linebender">Linebender</a></div>
       <div class="sub mono">linebender · <a href="https://linebender.org">linebender.org</a></div>
@@ -2636,7 +2656,7 @@
         <span class="detail">57 contributors · 11 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">61</td>
+    <td class="rank mono" data-label="Rank">62</td>
     <td>
       <div class="org"><a href="https://github.com/linuxfoundation">The Linux Foundation</a></div>
       <div class="sub mono">linuxfoundation · <a href="https://linuxfoundation.org">linuxfoundation.org</a></div>
@@ -2650,7 +2670,7 @@
         <span class="detail">35 contributors · 284 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">62</td>
+    <td class="rank mono" data-label="Rank">63</td>
     <td>
       <div class="org"><a href="https://github.com/NixOS">Nix/Nixpkgs/NixOS</a></div>
       <div class="sub mono">NixOS · <a href="https://nixos.org">nixos.org</a></div>
@@ -2672,7 +2692,7 @@
         <span class="detail">100+ contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">63</td>
+    <td class="rank mono" data-label="Rank">64</td>
     <td>
       <div class="org"><a href="https://github.com/pymor">pyMOR</a></div>
       <div class="sub mono">pymor · <a href="https://pymor.org">pymor.org</a></div>
@@ -2686,7 +2706,7 @@
         <span class="detail">37 contributors · 516 runs ÷ 4 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">64</td>
+    <td class="rank mono" data-label="Rank">65</td>
     <td>
       <div class="org"><a href="https://github.com/tskit-dev">Tskit developers</a></div>
       <div class="sub mono">tskit-dev · <a href="https://tskit.dev">tskit.dev</a></div>
@@ -2712,7 +2732,7 @@
         <span class="detail">8 contributors · 16 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">65</td>
+    <td class="rank mono" data-label="Rank">66</td>
     <td>
       <div class="org"><a href="https://github.com/ruby">The Ruby Programming Language</a></div>
       <div class="sub mono">ruby · <a href="https://ruby-lang.org">ruby-lang.org</a></div>
@@ -2730,7 +2750,7 @@
         <span class="detail">100+ contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">66</td>
+    <td class="rank mono" data-label="Rank">67</td>
     <td>
       <div class="org"><a href="https://github.com/logos-storage">Logos Storage</a></div>
       <div class="sub mono">logos-storage · <a href="https://logos.co">logos.co</a></div>
@@ -2744,7 +2764,7 @@
         <span class="detail">30 contributors · 240 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">67</td>
+    <td class="rank mono" data-label="Rank">68</td>
     <td>
       <div class="org"><a href="https://github.com/MIT-LCP">MIT Laboratory for Computational Physiology</a></div>
       <div class="sub mono">MIT-LCP · <a href="https://lcp.mit.edu">lcp.mit.edu</a></div>
@@ -2758,7 +2778,7 @@
         <span class="detail">37 contributors · 593 runs ÷ 5 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">68</td>
+    <td class="rank mono" data-label="Rank">69</td>
     <td>
       <div class="org"><a href="https://github.com/spiffe">SPIFFE</a></div>
       <div class="sub mono">spiffe · <a href="https://spiffe.io">spiffe.io</a></div>
@@ -2780,7 +2800,7 @@
         <span class="detail">100+ contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">69</td>
+    <td class="rank mono" data-label="Rank">70</td>
     <td>
       <div class="org"><a href="https://github.com/crypto-org-chain">Crypto.org</a></div>
       <div class="sub mono">crypto-org-chain · <a href="https://crypto.org">crypto.org</a></div>
@@ -2798,7 +2818,7 @@
         <span class="detail">100+ contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">70</td>
+    <td class="rank mono" data-label="Rank">71</td>
     <td>
       <div class="org"><a href="https://github.com/nuxt">Nuxt</a></div>
       <div class="sub mono">nuxt · <a href="https://nuxt.com">nuxt.com</a></div>
@@ -2816,7 +2836,7 @@
         <span class="detail">21 contributors · 56 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">71</td>
+    <td class="rank mono" data-label="Rank">72</td>
     <td>
       <div class="org"><a href="https://github.com/EnzymeAD">Enzyme Automatic Differentiation Compiler</a></div>
       <div class="sub mono">EnzymeAD · <a href="https://enzyme.mit.edu">enzyme.mit.edu</a></div>
@@ -2838,7 +2858,7 @@
         <span class="detail">65 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">72</td>
+    <td class="rank mono" data-label="Rank">73</td>
     <td>
       <div class="org"><a href="https://github.com/miracum">MIRACUM</a></div>
       <div class="sub mono">miracum · <a href="https://miracum.org">miracum.org</a></div>
@@ -2856,7 +2876,7 @@
         <span class="detail">13 contributors · 31 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">73</td>
+    <td class="rank mono" data-label="Rank">74</td>
     <td>
       <div class="org"><a href="https://github.com/cncf">Cloud Native Computing Foundation (CNCF)</a></div>
       <div class="sub mono">cncf · <a href="https://cncf.io">cncf.io</a></div>
@@ -2874,7 +2894,7 @@
         <span class="detail">12 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">74</td>
+    <td class="rank mono" data-label="Rank">75</td>
     <td>
       <div class="org"><a href="https://github.com/stenciljs">StencilJS</a></div>
       <div class="sub mono">stenciljs · <a href="https://stenciljs.com">stenciljs.com</a></div>
@@ -2888,7 +2908,7 @@
         <span class="detail">100+ contributors · 160 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">75</td>
+    <td class="rank mono" data-label="Rank">76</td>
     <td>
       <div class="org"><a href="https://github.com/cafeore-tkb">珈琲・俺</a></div>
       <div class="sub mono">cafeore-tkb · <a href="https://cafeore.cafe">cafeore.cafe</a></div>
@@ -2902,7 +2922,7 @@
         <span class="detail">10 contributors · 128 runs ÷ 2 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">76</td>
+    <td class="rank mono" data-label="Rank">77</td>
     <td>
       <div class="org"><a href="https://github.com/filecoin-project">Filecoin</a></div>
       <div class="sub mono">filecoin-project · <a href="https://filecoin.io">filecoin.io</a></div>
@@ -2924,7 +2944,7 @@
         <span class="detail">19 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">77</td>
+    <td class="rank mono" data-label="Rank">78</td>
     <td>
       <div class="org"><a href="https://github.com/sourmash-bio">sourmash, for large-scale biological sequence search!</a></div>
       <div class="sub mono">sourmash-bio · <a href="https://sourmash.bio">sourmash.bio</a></div>
@@ -2938,7 +2958,7 @@
         <span class="detail">46 contributors · 474 runs ÷ 7.7 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">78</td>
+    <td class="rank mono" data-label="Rank">79</td>
     <td>
       <div class="org"><a href="https://github.com/cloudscape-design">Cloudscape</a></div>
       <div class="sub mono">cloudscape-design · <a href="https://cloudscape.design">cloudscape.design</a></div>
@@ -2952,7 +2972,7 @@
         <span class="detail">28 contributors · 60 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">79</td>
+    <td class="rank mono" data-label="Rank">80</td>
     <td>
       <div class="org"><a href="https://github.com/meilisearch">Meilisearch</a></div>
       <div class="sub mono">meilisearch · <a href="https://meilisearch.com">meilisearch.com</a></div>
@@ -2970,7 +2990,7 @@
         <span class="detail">33 contributors · 14 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">80</td>
+    <td class="rank mono" data-label="Rank">81</td>
     <td>
       <div class="org"><a href="https://github.com/softdevteam">Software Development Team</a></div>
       <div class="sub mono">softdevteam · <a href="https://soft-dev.org">soft-dev.org</a></div>
@@ -2984,7 +3004,7 @@
         <span class="detail">28 contributors · 51 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">81</td>
+    <td class="rank mono" data-label="Rank">82</td>
     <td>
       <div class="org"><a href="https://github.com/arkworks-rs">arkworks</a></div>
       <div class="sub mono">arkworks-rs · <a href="https://arkworks.rs">arkworks.rs</a></div>
@@ -3010,7 +3030,7 @@
         <span class="detail">25 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">82</td>
+    <td class="rank mono" data-label="Rank">83</td>
     <td>
       <div class="org"><a href="https://github.com/TuringLang">The Turing Language</a></div>
       <div class="sub mono">TuringLang · <a href="https://turinglang.org">turinglang.org</a></div>
@@ -3032,7 +3052,7 @@
         <span class="detail">31 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">83</td>
+    <td class="rank mono" data-label="Rank">84</td>
     <td>
       <div class="org"><a href="https://github.com/temporalio">temporal.io</a></div>
       <div class="sub mono">temporalio · <a href="https://temporal.io">temporal.io</a></div>
@@ -3046,7 +3066,7 @@
         <span class="detail">100+ contributors · 156 runs ÷ 4 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">84</td>
+    <td class="rank mono" data-label="Rank">85</td>
     <td>
       <div class="org"><a href="https://github.com/rustic-rs">rustic</a></div>
       <div class="sub mono">rustic-rs · <a href="https://rustic.cli.rs">rustic.cli.rs</a></div>
@@ -3060,7 +3080,7 @@
         <span class="detail">61 contributors · 180 runs ÷ 5 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">85</td>
+    <td class="rank mono" data-label="Rank">86</td>
     <td>
       <div class="org"><a href="https://github.com/georust">GeoRust</a></div>
       <div class="sub mono">georust · <a href="https://georust.org">georust.org</a></div>
@@ -3078,7 +3098,7 @@
         <span class="detail">12 contributors · 0 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">86</td>
+    <td class="rank mono" data-label="Rank">87</td>
     <td>
       <div class="org"><a href="https://github.com/bearcove">bearcove</a></div>
       <div class="sub mono">bearcove · <a href="https://bearcove.eu">bearcove.eu</a></div>
@@ -3092,7 +3112,7 @@
         <span class="detail">19 contributors · 28 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">87</td>
+    <td class="rank mono" data-label="Rank">88</td>
     <td>
       <div class="org"><a href="https://github.com/projectbluefin">Project Bluefin</a></div>
       <div class="sub mono">projectbluefin · <a href="https://projectbluefin.io">projectbluefin.io</a></div>
@@ -3106,7 +3126,7 @@
         <span class="detail">42 contributors · 27 runs ÷ 1 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">88</td>
+    <td class="rank mono" data-label="Rank">89</td>
     <td>
       <div class="org"><a href="https://github.com/editor-js">Editor.js</a></div>
       <div class="sub mono">editor-js · <a href="https://editorjs.io">editorjs.io</a></div>
@@ -3118,20 +3138,6 @@
         <a href="https://github.com/editor-js/document-model/actions?query=event%3Amerge_group">editor-js/document-model</a>
         <span class="mono dim">26</span>
         <span class="detail">9 contributors · 188 runs ÷ 7.1 workflows</span>
-      </li></ul></td>
-  </tr><tr class="row dimmed">
-    <td class="rank mono" data-label="Rank">89</td>
-    <td>
-      <div class="org"><a href="https://github.com/bugbakery">The Vegan Bug Bakery</a></div>
-      <div class="sub mono">bugbakery · <a href="https://bugbakery.org">bugbakery.org</a></div>
-    </td>
-    <td data-label="Segment"><span class="pill cool">Native</span><div class="entity non_buyer">Community project</div><div class="why" title="No company mentioned; builds open-source transcription software with community contributors (8).">No company mentioned; builds open-source transcription software with community contributors (8).</div></td>
-    <td class="vol mono" data-label="Volume">26<span class="unit">batches through the queue</span></td>
-    <td class="mono dim" data-label="Running">GitHub native merge queue<span class="unit">8 contributors</span></td>
-    <td data-label="Evidence"><ul class="repos"><li>
-        <a href="https://github.com/bugbakery/transcribee/actions?query=event%3Amerge_group">bugbakery/transcribee</a>
-        <span class="mono dim">26</span>
-        <span class="detail">8 contributors · 50 runs ÷ 1.9 workflows</span>
       </li></ul></td>
   </tr><tr class="row dimmed">
     <td class="rank mono" data-label="Rank">90</td>
@@ -3298,14 +3304,14 @@
     signal exists. This list is what is visible, not what is out there.</p>
     <ul>
       <li><strong>3,063</strong> repositories discovered across
-          <strong>2,274</strong> distinct owners;
-          <strong>163</strong> qualified as companies,
-          <strong>572</strong> rejected.</li>
-      <li><strong>87</strong> further qualified organizations have a merge
+          <strong>2,275</strong> distinct owners;
+          <strong>164</strong> qualified as companies,
+          <strong>616</strong> rejected.</li>
+      <li><strong>86</strong> further qualified organizations have a merge
           queue configured but no observed activity. They are counted here and deliberately left out of the
           ranked list — "configured" is not "running".</li>
-      <li><strong>215</strong> repositories were excluded from volume for
-          having fewer than 8 contributors, and <strong>73</strong> organizations
+      <li><strong>216</strong> repositories were excluded from volume for
+          having fewer than 8 contributors, and <strong>74</strong> organizations
           dropped out entirely as a result. A queue with no team behind it is a side project, not a lead.</li>
       <li>Volume is <strong>queued batches</strong>, not workflow runs. A repo with 20 workflow files emits
           20 runs per batch, so raw run counts are not comparable between repos; each row shows the divisor
@@ -3313,7 +3319,7 @@
       <li>Each organization is classified as a company, vendor-backed OSS project, foundation,
              community project, or public-sector body — because adopting a merge queue does not imply
              anyone here buys seats. Non-buyers are kept in the list and dimmed rather than deleted, so
-             the classification can be checked. 163
+             the classification can be checked. 164
              classified, 0 failed.</li>
       <li>GitHub reports ~31,576 matching workflow files but caps any single search at 1,000 retrievable results; this run sharded by file size to widen that window. Private repositories are invisible to this method by construction.</li>
       <li>Volume units are not interchangeable: native orgs are counted in <span class="mono">merge_group</span>
@@ -3323,7 +3329,7 @@
           noise source and are removed here.</li>
     </ul>
     <p class="dim" style="margin:16px 0 0">Rejections by reason:</p>
-    <ul class="reasons"><li><span class="mono">not_an_organization</span><span class="mono dim">303</span></li><li><span class="mono">no_resolvable_domain</span><span class="mono dim">201</span></li><li><span class="mono">no_org_footprint</span><span class="mono dim">184</span></li><li><span class="mono">too_few_repos</span><span class="mono dim">55</span></li><li><span class="mono">vendor_or_platform</span><span class="mono dim">3</span></li></ul>
+    <ul class="reasons"><li><span class="mono">not_an_organization</span><span class="mono dim">326</span></li><li><span class="mono">no_resolvable_domain</span><span class="mono dim">218</span></li><li><span class="mono">no_org_footprint</span><span class="mono dim">198</span></li><li><span class="mono">too_few_repos</span><span class="mono dim">59</span></li><li><span class="mono">vendor_or_platform</span><span class="mono dim">3</span></li></ul>
   </div>
 
   <footer>merge-queue-census · behavioral qualification, not firmographics · github.com/BrandonGarate177</footer>

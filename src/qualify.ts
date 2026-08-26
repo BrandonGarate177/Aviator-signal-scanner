@@ -6,6 +6,9 @@
  * from "organizations you could sell to", so it is deliberately strict and
  * records *why* it rejected each candidate — the rejection tally is reported.
  */
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { resolve as dnsResolve } from "node:dns/promises";
 import { gh } from "./gh.js";
 import type { OrgQualification } from "./types.js";
@@ -53,6 +56,14 @@ const EXCLUDED_LOGINS = new Set([
 ]);
 
 const dnsCache = new Map<string, boolean>();
+const DNS_CACHE_DIR = join(".cache", "dns");
+/** A dead domain's lookup can hang for seconds; cap it. */
+const DNS_TIMEOUT_MS = 3_000;
+
+function dnsCacheFile(host: string): string {
+  const hash = createHash("sha256").update(host).digest("hex").slice(0, 32);
+  return join(DNS_CACHE_DIR, `${hash}.json`);
+}
 
 function normalizeDomain(blog: string | null | undefined): string | null {
   if (!blog) return null;
@@ -72,17 +83,41 @@ function normalizeDomain(blog: string | null | undefined): string | null {
   return host;
 }
 
+/**
+ * Does this hostname resolve? Cached to disk, not just in memory — a run walks
+ * thousands of owners, and re-resolving every domain on each run (where a dead
+ * domain hangs until it times out) dominated the wall clock.
+ */
 async function resolves(host: string): Promise<boolean> {
-  const cached = dnsCache.get(host);
-  if (cached !== undefined) return cached;
+  const inMemory = dnsCache.get(host);
+  if (inMemory !== undefined) return inMemory;
+
+  const file = dnsCacheFile(host);
+  if (existsSync(file)) {
+    try {
+      const { ok } = JSON.parse(readFileSync(file, "utf8")) as { ok: boolean };
+      dnsCache.set(host, ok);
+      return ok;
+    } catch {
+      // fall through and re-resolve
+    }
+  }
+
   let ok = false;
   try {
-    const records = await dnsResolve(host, "A").catch(() => dnsResolve(host, "AAAA"));
+    const lookup = dnsResolve(host, "A").catch(() => dnsResolve(host, "AAAA"));
+    const timeout = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("dns timeout")), DNS_TIMEOUT_MS),
+    );
+    const records = await Promise.race([lookup, timeout]);
     ok = Array.isArray(records) && records.length > 0;
   } catch {
     ok = false;
   }
+
   dnsCache.set(host, ok);
+  mkdirSync(DNS_CACHE_DIR, { recursive: true });
+  writeFileSync(file, JSON.stringify({ host, ok }));
   return ok;
 }
 
