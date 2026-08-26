@@ -3,5 +3,4 @@ node_modules/
 .env
 out/*.json
 out/*.html
-!out/census.example.html
 .DS_Store

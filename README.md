@@ -38,9 +38,8 @@ candidates were rejected and why. From the last full run: 3,063 repositories and
 215 repos and 73 orgs excluded for having no team behind the queue — 163 left.
 Roughly **1 in 14** raw discoveries survives.
 
-A rendered example is committed at
-[`out/census.example.html`](out/census.example.html) so the output can be read
-without running anything.
+**[View the latest report →](https://brandongarate177.github.io/Aviator-signal-scanner/)**
+(published from `docs/`, so the output can be read without running anything).
 
 ---
 

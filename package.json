@@ -6,7 +6,8 @@
   "description": "A behavioral census of organizations running merge queues in public on GitHub.",
   "scripts": {
     "census": "tsx src/cli.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "pages": "tsx src/cli.ts && cp out/census.html docs/index.html"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
